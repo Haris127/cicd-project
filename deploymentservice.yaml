@@ -1,34 +1,44 @@
 apiVersion: apps/v1
-kind: Deployment # Kubernetes resource kind we are creating
+kind: Deployment
 metadata:
-  name: react-app-deployment
+  # Unique key of the Deployment instance
+  name: deployment-my-react-app
 spec:
+  # 3 Pods should exist at all times.
+  replicas: 3
   selector:
     matchLabels:
       app: react-app
-  replicas: 2 # Number of replicas that will be created for this deployment
   template:
     metadata:
       labels:
+        # Apply this label to pods and default
+        # the Deployment label selector to this value
         app: react-app
     spec:
       containers:
-        - name: react-app
-          image: hsris/react-app # Image that will be used to containers in the cluster
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 8001 # The port that the container is running on in the cluster
+      - name: react-app
+        # Run this image
+        image: hsris/react-app
+        
 ---
 
-apiVersion: v1 # Kubernetes API version
-kind: Service # Kubernetes resource kind we are creating
-metadata: # Metadata of the resource kind we are creating
-  name: reactapp-k8ssvc
+apiVersion: v1
+kind: Service
+metadata:
+  # Unique key of the Service instance
+  name: service-my-react-app
 spec:
-  selector:
-    app: spring-boot-k8s
   ports:
-    - protocol: "TCP"
-      port: 8001 # The port that the service is running on in the cluster
-      targetPort: 8001 # The port exposed by the service
-  type: NodePort # type of the service.
+    # Accept traffic sent to port 80
+    - name: http
+      port: 8000
+      targetPort: 8001
+  selector:
+    # Loadbalance traffic across Pods matching
+    # this label selector
+    app: react-app
+  # Create an HA proxy in the cloud provider
+  # with an External IP address - *Only supported
+  # by some cloud providers*
+  type: LoadBalancer
