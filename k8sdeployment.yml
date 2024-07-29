@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   # Unique key of the Deployment instance
-  name: my-react-app
+  name: deployment-my-react-app
 spec:
   # 3 Pods should exist at all times.
   replicas: 3
