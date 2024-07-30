@@ -58,3 +58,4 @@ This project automates the deployment of a Django web application using Jenkins 
    ```sh
    kubectl create namespace django-app
 
+
