@@ -58,4 +58,42 @@ This project automates the deployment of a Django web application using Jenkins 
    ```sh
    kubectl create namespace django-app
 
+### Django Application Setup
+
+1.  **Dockerize the Application**:
+    -   Create a `Dockerfile` for the Django application.
+    -   Build and push the Docker image to a container registry.
+2.  **Kubernetes Manifests**:
+    -   Create deployment and service YAML files for the Django application.
+
+### SonarQube Setup
+
+1.  **Install SonarQube**: Follow the official documentation to set up a SonarQube server.
+2.  **Integrate SonarQube with Jenkins**:
+    -   Configure the SonarQube Scanner in Jenkins.
+    -   Add SonarQube analysis stage in the Jenkins pipeline.
+
+## Deployment
+
+1.  **Configure Jenkins Pipeline**:
+    -   Create a Jenkins pipeline script (`Jenkinsfile`) in the root of your repository.
+2.  **Run the Pipeline**:
+    -   Trigger the pipeline in Jenkins to build, test, analyze code quality with SonarQube, and deploy the application to the Kubernetes cluster.
+
+## Testing
+
+-   Access the Django application using the Kubernetes service URL or ingress.
+-   Verify that the application is running as expected.
+
+## SonarQube Analysis
+
+-   Analyze the code quality, bugs, vulnerabilities, and code smells using SonarQube.
+-   Review the SonarQube dashboard for detailed analysis and metrics.
+
+## Troubleshooting
+
+-   Check Jenkins build logs for any errors.
+-   Use `kubectl logs` to view logs from the Kubernetes pods.
+-   Ensure all services and deployments in Kubernetes are running.
+-   Review SonarQube logs and dashboard for analysis issues.
 
